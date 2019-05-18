@@ -8,6 +8,8 @@ replace k8s.io/klog => github.com/istio/klog v0.0.0-20190424230111-fb7481ea8bcf
 
 replace github.com/spf13/viper => github.com/istio/viper v1.3.3-0.20190515210538-2789fed3109c
 
+replace istio.io/api => github.com/timbyr/api v0.0.0-20190518194913-23581317e0b6
+
 require (
 	cloud.google.com/go v0.37.4
 	code.cloudfoundry.org/copilot v0.0.0-20180808174356-6bade2a0677a
