@@ -127,15 +127,6 @@ func TestValueTypeEncoder_Errors(t *testing.T) {
 			},
 		},
 		{
-			input:        "request.headers",
-			builderError: errors.New("unsupported type: STRING_MAP"),
-			bag: map[string]interface{}{
-				"request.headers": map[string]string{
-					"user": "me",
-				},
-			},
-		},
-		{
 			input:        "test.uri",
 			encoderError: errors.New("error converting value"),
 			bag: map[string]interface{}{
@@ -280,6 +271,16 @@ func TestValueTypeEncoder(t *testing.T) {
 				EmailAddressValue: &v1beta1.EmailAddress{Value: "user@google.com"}}},
 			bag: map[string]interface{}{
 				"test.email_address": "user@google.com",
+			},
+		},
+		{
+			input: "request.headers",
+			output: v1beta1.Value{&v1beta1.Value_StringMapValue{
+				StringMapValue: &v1beta1.StringMap{Value: map[string]string{"user": "me"}}}},
+			bag: map[string]interface{}{
+				"request.headers": map[string]string{
+					"user": "me",
+				},
 			},
 		},
 	} {

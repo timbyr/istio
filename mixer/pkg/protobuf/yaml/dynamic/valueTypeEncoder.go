@@ -323,6 +323,27 @@ func init() {
 				return &v1beta1.Value{Value: &v1beta1.Value_TimestampValue{TimestampValue: v}}, nil
 			}, nil
 		})
+	registerVT(proto.MessageName((*v1beta1.StringMap)(nil)), v1beta1.STRING_MAP,
+		func(expr compiled.Expression, vt v1beta1.ValueType) (valueProducer, error) {
+			return func(bag attribute.Bag, wrap bool) (marshaler, error) {
+				ev, er := expr.Evaluate(bag)
+				if er != nil {
+					return nil, er
+				}
+				var ok bool
+				var sm map[string]string
+
+				if sm, ok = ev.(map[string]string); !ok {
+					return nil, incorrectTypeError(vt, ev, "map[string]string")
+				}
+
+				v := &v1beta1.StringMap{Value: sm}
+				if !wrap {
+					return v, nil
+				}
+				return &v1beta1.Value{Value: &v1beta1.Value_StringMapValue{StringMapValue: v}}, nil
+			}, nil
+		})
 }
 
 // valueTypeBuilderFuncs returns named builders for all
