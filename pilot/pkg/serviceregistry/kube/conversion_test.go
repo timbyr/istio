@@ -74,6 +74,10 @@ func TestConvertProtocol(t *testing.T) {
 		{8888, "redis-test", nil, coreV1.ProtocolTCP, protocol.Redis},
 		{8888, "mysql", nil, coreV1.ProtocolTCP, protocol.MySQL},
 		{8888, "mysql-test", nil, coreV1.ProtocolTCP, protocol.MySQL},
+		{8888, "kafka", nil, coreV1.ProtocolTCP, protocol.Kafka},
+		{8888, "kafka-test", nil, coreV1.ProtocolTCP, protocol.Kafka},
+		{8888, "zookeeper", nil, coreV1.ProtocolTCP, protocol.ZooKeeper},
+		{8888, "zookeeper-test", nil, coreV1.ProtocolTCP, protocol.ZooKeeper},
 		{8888, "tcp", &http, coreV1.ProtocolTCP, protocol.HTTP},
 	}
 

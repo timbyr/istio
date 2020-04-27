@@ -145,6 +145,22 @@ var (
 		"EnableRedisFilter enables injection of `envoy.filters.network.redis_proxy` in the filter chain.",
 	).Get()
 
+	// EnableKafkaFilter enables injection of `envoy.filters.network.kafka_broker` in the filter chain.
+	// Pilot injects this outbound filter if the service port name is `kafka`.
+	EnableKafkaFilter = env.RegisterBoolVar(
+		"PILOT_ENABLE_KAFKA_FILTER",
+		false,
+		"EnableKafkaFilter enables injection of `envoy.filters.network.kafka_broker` in the filter chain.",
+	).Get()
+
+	// EnableZooKeeperFilter enables injection of `envoy.filters.network.zookeeper_proxy` in the filter chain.
+	// Pilot injects this outbound filter if the service port name is `zookeeper`.
+	EnableZooKeeperFilter = env.RegisterBoolVar(
+		"PILOT_ENABLE_ZOOKEEPER_FILTER",
+		false,
+		"EnableZookeeperFilter enables injection of `envoy.filters.network.zookeeper_proxy` in the filter chain.",
+	).Get()
+
 	// UseRemoteAddress sets useRemoteAddress to true for side car outbound listeners so that it picks up the localhost
 	// address of the sender, which is an internal address, so that trusted headers are not sanitized.
 	UseRemoteAddress = env.RegisterBoolVar(

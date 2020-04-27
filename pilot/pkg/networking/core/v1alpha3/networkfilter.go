@@ -21,11 +21,13 @@ import (
 	listener "github.com/envoyproxy/go-control-plane/envoy/api/v2/listener"
 	accesslogconfig "github.com/envoyproxy/go-control-plane/envoy/config/accesslog/v2"
 	accesslog "github.com/envoyproxy/go-control-plane/envoy/config/filter/accesslog/v2"
+	kafka_broker "github.com/envoyproxy/go-control-plane/envoy/config/filter/network/kafka_broker/v2alpha1"
 	mongo_proxy "github.com/envoyproxy/go-control-plane/envoy/config/filter/network/mongo_proxy/v2"
 	mysql_proxy "github.com/envoyproxy/go-control-plane/envoy/config/filter/network/mysql_proxy/v1alpha1"
 	redis_proxy "github.com/envoyproxy/go-control-plane/envoy/config/filter/network/redis_proxy/v2"
 	tcp_proxy "github.com/envoyproxy/go-control-plane/envoy/config/filter/network/tcp_proxy/v2"
 	thrift_proxy "github.com/envoyproxy/go-control-plane/envoy/config/filter/network/thrift_proxy/v2alpha1"
+	zookeeper_proxy "github.com/envoyproxy/go-control-plane/envoy/config/filter/network/zookeeper_proxy/v1alpha1"
 	"github.com/envoyproxy/go-control-plane/pkg/wellknown"
 	"github.com/golang/protobuf/ptypes"
 
@@ -171,6 +173,19 @@ func buildNetworkFiltersStack(_ *model.Proxy, port *model.Port, tcpFilter *liste
 		} else {
 			filterstack = append(filterstack, tcpFilter)
 		}
+	case protocol.Kafka:
+		if features.EnableKafkaFilter {
+			filterstack = append(filterstack, buildKafkaFilter(statPrefix))
+		} else {
+			filterstack = append(filterstack, tcpFilter)
+		}
+	case protocol.ZooKeeper:
+		if features.EnableZooKeeperFilter {
+			filterstack = append(filterstack, buildZooKeeperFilter(statPrefix))
+		} else {
+			filterstack = append(filterstack, tcpFilter)
+		}
+
 	default:
 		filterstack = append(filterstack, tcpFilter)
 	}
@@ -279,6 +294,34 @@ func buildMySQLFilter(statPrefix string) *listener.Filter {
 	out := &listener.Filter{
 		Name:       wellknown.MySQLProxy,
 		ConfigType: &listener.Filter_TypedConfig{TypedConfig: util.MessageToAny(mySQLProxy)},
+	}
+
+	return out
+}
+
+// buildKafkaFilter builds an outbound Envoy KafkaProxy filter.
+func buildKafkaFilter(statPrefix string) *listener.Filter {
+	kafkaBroker := &kafka_broker.KafkaBroker{
+		StatPrefix: statPrefix, // Kafka stats are prefixed with kafka.<statPrefix> by Envoy.
+	}
+
+	out := &listener.Filter{
+		Name:       "envoy.filters.network.kafka_broker",
+		ConfigType: &listener.Filter_TypedConfig{TypedConfig: util.MessageToAny(kafkaBroker)},
+	}
+
+	return out
+}
+
+// buildZookeeperFilter builds an outbound Envoy ZookeeperProxy filter.
+func buildZooKeeperFilter(statPrefix string) *listener.Filter {
+	zooKeeperProxy := &zookeeper_proxy.ZooKeeperProxy{
+		StatPrefix: statPrefix, // Zookeeper stats are prefixed with zookeeper.<statPrefix> by Envoy.
+	}
+
+	out := &listener.Filter{
+		Name:       "envoy.filters.network.zookeeper_proxy",
+		ConfigType: &listener.Filter_TypedConfig{TypedConfig: util.MessageToAny(zooKeeperProxy)},
 	}
 
 	return out

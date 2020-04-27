@@ -51,16 +51,18 @@ type portGenerator struct {
 func newPortGenerator() *portGenerator {
 	return &portGenerator{
 		next: map[protocol.Instance]int{
-			protocol.HTTP:    httpBase,
-			protocol.HTTPS:   httpsBase,
-			protocol.TLS:     httpsBase,
-			protocol.TCP:     tcpBase,
-			protocol.GRPCWeb: grpcBase,
-			protocol.GRPC:    grpcBase,
-			protocol.Mongo:   tcpBase,
-			protocol.MySQL:   tcpBase,
-			protocol.Redis:   tcpBase,
-			protocol.UDP:     tcpBase,
+			protocol.HTTP:      httpBase,
+			protocol.HTTPS:     httpsBase,
+			protocol.TLS:       httpsBase,
+			protocol.TCP:       tcpBase,
+			protocol.GRPCWeb:   grpcBase,
+			protocol.GRPC:      grpcBase,
+			protocol.Mongo:     tcpBase,
+			protocol.MySQL:     tcpBase,
+			protocol.Redis:     tcpBase,
+			protocol.UDP:       tcpBase,
+			protocol.Kafka:     tcpBase,
+			protocol.ZooKeeper: tcpBase,
 		},
 		used: make(map[int]struct{}),
 	}

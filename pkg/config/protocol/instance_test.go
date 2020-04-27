@@ -58,6 +58,13 @@ func TestParse(t *testing.T) {
 		{"mysql", protocol.MySQL},
 		{"MYSQL", protocol.MySQL},
 		{"MySQL", protocol.MySQL},
+		{"kafka", protocol.Kafka},
+		{"Kafka", protocol.Kafka},
+		{"KAFKA", protocol.Kafka},
+		{"zookeeper", protocol.ZooKeeper},
+		{"zooKeeper", protocol.ZooKeeper},
+		{"ZooKeeper", protocol.ZooKeeper},
+		{"ZOOKEEPER", protocol.ZooKeeper},
 		{"", protocol.Unsupported},
 		{"SMTP", protocol.Unsupported},
 	}

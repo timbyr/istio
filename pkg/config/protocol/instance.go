@@ -52,6 +52,10 @@ const (
 	Redis Instance = "Redis"
 	// MySQL declares that the port carries MySQL traffic.
 	MySQL Instance = "MySQL"
+	// Kafka declares that the port carries Kafka traffic.
+	Kafka Instance = "Kafka"
+	// Zookeeper declares that the port carries Zookeper traffic.
+	ZooKeeper Instance = "ZooKeeper"
 	// Unsupported - value to signify that the protocol is unsupported.
 	Unsupported Instance = "UnsupportedProtocol"
 )
@@ -85,6 +89,10 @@ func Parse(s string) Instance {
 		return Redis
 	case "mysql":
 		return MySQL
+	case "kafka":
+		return Kafka
+	case "zookeeper":
+		return ZooKeeper
 	}
 
 	return Unsupported
@@ -123,7 +131,7 @@ func (i Instance) IsThrift() bool {
 // IsTCP is true for protocols that use TCP as transport protocol
 func (i Instance) IsTCP() bool {
 	switch i {
-	case TCP, HTTPS, TLS, Mongo, Redis, MySQL:
+	case TCP, HTTPS, TLS, Mongo, Redis, MySQL, Kafka, ZooKeeper:
 		return true
 	default:
 		return false

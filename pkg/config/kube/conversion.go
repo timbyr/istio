@@ -23,20 +23,24 @@ import (
 )
 
 const (
-	SMTP    = 25
-	DNS     = 53
-	MySQL   = 3306
-	MongoDB = 27017
+	SMTP      = 25
+	DNS       = 53
+	ZooKeeper = 2181
+	MySQL     = 3306
+	Kafka     = 9092
+	MongoDB   = 27017
 )
 
 var (
 	// Ports be skipped for protocol sniffing. Applications bound to these ports will be broken if
 	// protocol sniffing is enabled.
 	wellKnownPorts = map[int32]struct{}{
-		SMTP:    {},
-		DNS:     {},
-		MySQL:   {},
-		MongoDB: {},
+		SMTP:      {},
+		DNS:       {},
+		ZooKeeper: {},
+		MySQL:     {},
+		Kafka:     {},
+		MongoDB:   {},
 	}
 )
 

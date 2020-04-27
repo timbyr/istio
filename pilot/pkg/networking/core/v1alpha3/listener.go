@@ -1782,7 +1782,8 @@ func buildSidecarInboundMgmtListeners(node *model.Proxy, push *model.PushContext
 	for _, mPort := range managementPorts {
 		switch mPort.Protocol {
 		case protocol.HTTP, protocol.HTTP2, protocol.GRPC, protocol.GRPCWeb, protocol.TCP,
-			protocol.HTTPS, protocol.TLS, protocol.Mongo, protocol.Redis, protocol.MySQL:
+			protocol.HTTPS, protocol.TLS, protocol.Mongo, protocol.Redis, protocol.MySQL,
+			protocol.Kafka, protocol.ZooKeeper:
 
 			instance := &model.ServiceInstance{
 				Service: &model.Service{
@@ -2584,8 +2585,10 @@ func isConflictWithWellKnownPort(incoming, existing protocol.Instance, conflict 
 
 	if (incoming == protocol.Mongo ||
 		incoming == protocol.MySQL ||
+		incoming == protocol.Kafka ||
 		existing == protocol.Mongo ||
-		existing == protocol.MySQL) && incoming != existing {
+		existing == protocol.MySQL ||
+		existing == protocol.Kafka) && incoming != existing {
 		return false
 	}
 

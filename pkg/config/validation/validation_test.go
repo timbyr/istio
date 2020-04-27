@@ -1312,7 +1312,7 @@ func TestValidateServerPort(t *testing.T) {
 			""},
 		{"invalid protocol",
 			&networking.Port{
-				Protocol: "kafka",
+				Protocol: "ldap",
 				Number:   1,
 				Name:     "Henry",
 			},

@@ -319,6 +319,14 @@ func testPorts(base int) []*model.Port {
 			Port:     base + 120,
 			Protocol: protocol.MySQL,
 		}, {
+			Name:     "kafka",
+			Port:     base + 130,
+			Protocol: protocol.Kafka,
+		}, {
+			Name:     "zookeeper",
+			Port:     base + 140,
+			Protocol: protocol.ZooKeeper,
+		}, {
 			Name:     "h2port",
 			Port:     base + 66,
 			Protocol: protocol.GRPC,

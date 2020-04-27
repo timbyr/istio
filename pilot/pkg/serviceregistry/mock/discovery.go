@@ -76,6 +76,14 @@ func MakeService(hostname host.Name, address string) *model.Service {
 				Name:     "mysql",
 				Port:     120, // target port 1120
 				Protocol: protocol.MySQL,
+			}, {
+				Name:     "kafka",
+				Port:     130, // target port 1130
+				Protocol: protocol.Kafka,
+			}, {
+				Name:     "zookeeper",
+				Port:     140, // target port 1140
+				Protocol: protocol.ZooKeeper,
 			},
 		},
 	}

@@ -66,7 +66,8 @@ func ModelProtocolToListenerProtocol(node *model.Proxy, p protocol.Instance,
 	case protocol.HTTP, protocol.HTTP2, protocol.GRPC, protocol.GRPCWeb:
 		return ListenerProtocolHTTP
 	case protocol.TCP, protocol.HTTPS, protocol.TLS,
-		protocol.Mongo, protocol.Redis, protocol.MySQL:
+		protocol.Mongo, protocol.Redis, protocol.MySQL,
+		protocol.Kafka, protocol.ZooKeeper:
 		return ListenerProtocolTCP
 	case protocol.Thrift:
 		if features.EnableThriftFilter {
